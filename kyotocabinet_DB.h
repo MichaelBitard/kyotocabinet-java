@@ -85,6 +85,15 @@ JNIEXPORT jboolean JNICALL Java_kyotocabinet_DB_iterate
 
 /*
  * Class:     kyotocabinet_DB
+ * Method:    scan_parallel
+ * Signature: (Lkyotocabinet/Visitor;Z)Z
+ */
+JNIEXPORT jboolean JNICALL Java_kyotocabinet_DB_scan_parallel
+  (JNIEnv *, jobject, jboolean);
+
+
+/*
+ * Class:     kyotocabinet_DB
  * Method:    set
  * Signature: ([B[B)Z
  */

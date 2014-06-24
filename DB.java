@@ -186,6 +186,15 @@ public class DB {
    * deadlock, any explicit database operation must not be performed in this method.
    */
   public native boolean iterate(Visitor visitor, boolean writable);
+   /**
+   * Scan each record in parallel.
+   * @param visitor a visitor object which implements the Visitor interface.
+   * @param thnum the number of worker threads.
+   * @return true on success, or false on failure.
+   * @note This function is for reading records and not for updating ones. The return value of the visitor is just ignored. 
+   * To avoid deadlock, any explicit database operation must not be performed in this function.
+   */
+  public native boolean scan_parallel(Visitor visitor, int thnum);
   /**
    * Set the value of a record.
    * @param key the key.
