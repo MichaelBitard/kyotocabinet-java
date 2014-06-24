@@ -1365,6 +1365,33 @@ JNIEXPORT jboolean JNICALL Java_kyotocabinet_DB_iterate
   }
 }
 
+/**
+ * Implementation of scan_parallel.
+ */
+JNIEXPORT jboolean JNICALL Java_kyotocabinet_DB_scan_parallel
+  (JNIEnv* env, jobject jself, jobject jvisitor, jint thnum) {
+  try {
+    if (!jvisitor) {
+      throwillarg(env);
+      return false;
+    }
+    kc::PolyDB* db = getdbcore(env, jself);
+    SoftVisitor visitor(env, jvisitor, thnum);
+    bool rv = db->scan_parallel(&visitor, thnum);
+    jthrowable jex = visitor.exception();
+    if (jex) {
+      env->Throw(jex);
+      return false;
+    }
+    if (rv) return true;
+    throwdberror(env, jself);
+    return false;
+  } catch (std::exception& e) {
+    return false;
+  }
+}
+
+
 
 /**
  * Implementation of set.
